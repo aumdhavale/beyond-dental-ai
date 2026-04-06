@@ -1,0 +1,10 @@
+{
+  "patients": [
+    {
+      "id": "PAT1001",
+      "name": "Michael Scott",
+      "phone": "9422488599",
+      "email": "michael@example.com"
+    }
+  ]
+}

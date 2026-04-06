@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beyond Dental Health — AI Receptionist</title>
+  <meta name="description"
+    content="Beyond Dental Health's intelligent AI voice receptionist — hands-free, call-like experience for booking appointments and dental queries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- ─── Navbar ─── -->
+  <header class="navbar glass">
+    <div class="nav-brand">
+      <div class="brand-icon"><i class="fa-solid fa-tooth"></i></div>
+      <div class="brand-text">
+        <span class="brand-name">Beyond Dental</span>
+        <span class="brand-tag">AI Receptionist</span>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#" class="nav-link active" id="tabDashboard"><i class="fa-solid fa-house-medical"></i> Dashboard</a>
+      <a href="#" class="nav-link" id="tabAppointments"><i class="fa-solid fa-calendar-check"></i> Appointments</a>
+      <a href="#" class="nav-link" id="tabAnalytics"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="status-badge online" id="statusBadge">
+        <span class="pulse-dot"></span>
+        <span id="statusText">Agent Online</span>
+      </div>
+      <button class="btn-icon" id="settingsBtn" title="Settings">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── Main Layout ─── -->
+  <main class="main-layout" id="mainContent">
+
+    <!-- ────── DASHBOARD VIEW ────── -->
+    <div id="viewDashboard" class="tab-view active">
+      <div class="dashboard-grid">
+
+        <!-- ── LEFT: Stats Panel ── -->
+        <aside class="stats-panel">
+
+          <!-- Welcome Card -->
+          <div class="card welcome-card">
+            <div class="welcome-avatar">
+              <i class="fa-solid fa-robot"></i>
+              <span class="avatar-ring"></span>
+            </div>
+            <h2 class="welcome-title">Good day 👋</h2>
+            <p class="welcome-sub">Your AI receptionist is active and ready for voice calls.</p>
+            <div class="welcome-divider"></div>
+            <div class="welcome-stat">
+              <span><i class="fa-solid fa-clock"></i> <span id="liveTime"></span></span>
+              <span><i class="fa-solid fa-calendar"></i> <span id="liveDate"></span></span>
+            </div>
+          </div>
+
+          <!-- Stat Cards -->
+          <div class="stat-grid">
+            <div class="card stat-card">
+              <div class="stat-icon teal"><i class="fa-solid fa-calendar-plus"></i></div>
+              <div class="stat-body">
+                <div class="stat-value" id="cntBooked">0</div>
+                <div class="stat-label">Booked Today</div>
+              </div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-icon purple"><i class="fa-solid fa-comment-dots"></i></div>
+              <div class="stat-body">
+                <div class="stat-value" id="cntQueries">0</div>
+                <div class="stat-label">Queries Handled</div>
+              </div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-icon blue"><i class="fa-solid fa-microphone-lines"></i></div>
+              <div class="stat-body">
+                <div class="stat-value">98%</div>
+                <div class="stat-label">Voice Accuracy</div>
+              </div>
+            </div>
+            <div class="card stat-card">
+              <div class="stat-icon gold"><i class="fa-solid fa-star"></i></div>
+              <div class="stat-body">
+                <div class="stat-value">4.9</div>
+                <div class="stat-label">Patient Rating</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Services Card -->
+          <div class="card services-card">
+            <div class="card-header">
+              <i class="fa-solid fa-stethoscope"></i>
+              <h3>Our Services</h3>
+            </div>
+            <ul class="services-list">
+              <li><span class="svc-dot teal"></span>General Dentistry</li>
+              <li><span class="svc-dot purple"></span>Cosmetic Treatments</li>
+              <li><span class="svc-dot blue"></span>Restorative Procedures</li>
+              <li><span class="svc-dot red"></span>Emergency Dental Care</li>
+              <li><span class="svc-dot gold"></span>Orthodontics</li>
+            </ul>
+          </div>
+
+        </aside>
+
+        <!-- ── CENTER: Chat + Call Panel ── -->
+        <section class="chat-panel">
+          <div class="card chat-card">
+
+            <!-- Chat Header -->
+            <div class="chat-header">
+              <div class="chat-header-left">
+                <div class="agent-avatar">
+                  <i class="fa-solid fa-tooth"></i>
+                </div>
+                <div>
+                  <h3 class="chat-title">Beyond Dental Receptionist</h3>
+                  <p class="chat-sub">Powered by Llama 3.1 · Groq · Voice AI</p>
+                </div>
+              </div>
+              <div class="chat-header-actions">
+                <button class="chip chip-active" id="modeVoice">
+                  <i class="fa-solid fa-microphone"></i> Voice
+                </button>
+                <button class="chip" id="modeText">
+                  <i class="fa-solid fa-keyboard"></i> Text
+                </button>
+              </div>
+            </div>
+
+            <!-- ── CALL OVERLAY (shown when call is active) ── -->
+            <div class="call-overlay" id="callOverlay">
+
+              <!-- Ripple rings -->
+              <div class="call-ripples">
+                <div class="ripple r1"></div>
+                <div class="ripple r2"></div>
+                <div class="ripple r3"></div>
+                <div class="call-avatar-wrap">
+                  <div class="call-avatar"><i class="fa-solid fa-tooth"></i></div>
+                </div>
+              </div>
+
+              <!-- Call name + duration -->
+              <div class="call-meta">
+                <div class="call-name">Beyond Dental AI</div>
+                <div class="call-duration-row">
+                  <i class="fa-solid fa-phone-volume"></i>
+                  <span id="callDuration">00:00</span>
+                </div>
+              </div>
+
+              <!-- Live status pill -->
+              <div class="status-pill pill-listening" id="statusPill">
+                <i class="fa-solid fa-microphone"></i>
+                <span id="statusPillText">Listening…</span>
+              </div>
+
+              <!-- Waveforms -->
+              <div class="waveform-group">
+                <!-- Listening waveform -->
+                <div class="waveform listening-wave" id="listeningWave">
+                  <div class="wave-bar wl" style="--d:0s"></div>
+                  <div class="wave-bar wl" style="--d:.1s"></div>
+                  <div class="wave-bar wl" style="--d:.2s"></div>
+                  <div class="wave-bar wl" style="--d:.3s"></div>
+                  <div class="wave-bar wl" style="--d:.15s"></div>
+                  <div class="wave-bar wl" style="--d:.05s"></div>
+                  <div class="wave-bar wl" style="--d:.25s"></div>
+                  <div class="wave-bar wl" style="--d:.35s"></div>
+                  <div class="wave-bar wl" style="--d:.1s"></div>
+                </div>
+                <!-- Speaking waveform -->
+                <div class="waveform speaking-wave" id="speakingWave">
+                  <div class="wave-bar ws" style="--d:0s"></div>
+                  <div class="wave-bar ws" style="--d:.08s"></div>
+                  <div class="wave-bar ws" style="--d:.16s"></div>
+                  <div class="wave-bar ws" style="--d:.24s"></div>
+                  <div class="wave-bar ws" style="--d:.12s"></div>
+                  <div class="wave-bar ws" style="--d:.04s"></div>
+                  <div class="wave-bar ws" style="--d:.2s"></div>
+                  <div class="wave-bar ws" style="--d:.28s"></div>
+                  <div class="wave-bar ws" style="--d:.08s"></div>
+                </div>
+              </div>
+
+              <!-- Interim transcript (live voice preview) -->
+              <div class="interim-area">
+                <span id="interimText" class="interim-text"></span>
+              </div>
+
+              <!-- End Call button -->
+              <button class="btn-end-call" id="endCallBtn" style="display:none;">
+                <i class="fa-solid fa-phone-slash"></i>
+                End Call
+              </button>
+
+            </div>
+            <!-- /call-overlay -->
+
+            <!-- Chat Messages (always visible below overlay) -->
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <!-- Speaking helper bar (subtle, non-call mode) -->
+            <div class="speaking-indicator" id="speakingIndicator">
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <span>Receptionist is speaking…</span>
+            </div>
+
+            <!-- Input bar -->
+            <div class="chat-input-bar">
+              <!-- Start Call Button (big, prominent) -->
+              <button class="btn-start-call" id="startCallBtn" title="Start Voice Call">
+                <i class="fa-solid fa-phone"></i>
+                <span>Start Call</span>
+              </button>
+
+              <div class="input-wrapper">
+                <input type="text" id="userInput" class="chat-input" placeholder="Start a call or type your message…"
+                  autocomplete="off" />
+                <button class="btn-send" id="sendBtn" title="Send">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+              <button class="btn-mic" id="micBtn" title="Tap to interrupt / mute">
+                <i class="fa-solid fa-microphone"></i>
+                <span class="mic-ring"></span>
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ── RIGHT: Appointment Panel ── -->
+        <aside class="appt-panel">
+
+          <!-- Booking Progress -->
+          <div class="card progress-card">
+            <div class="card-header">
+              <i class="fa-solid fa-list-check"></i>
+              <h3>Booking Progress</h3>
+            </div>
+            <div class="progress-steps" id="progressSteps">
+              <div class="step" data-step="ask_patient_kind"><span class="step-dot"></span><span>Patient Type</span>
+              </div>
+              <div class="step" data-step="ask_lookup"><span class="step-dot"></span><span>Lookup</span></div>
+              <div class="step" data-step="name"> <span class="step-dot"></span><span>Full Name</span></div>
+              <div class="step" data-step="phone"> <span class="step-dot"></span><span>Phone Number</span></div>
+              <div class="step" data-step="email"> <span class="step-dot"></span><span>Email Address</span></div>
+              <div class="step" data-step="date"> <span class="step-dot"></span><span>Preferred Date</span></div>
+              <div class="step" data-step="time"> <span class="step-dot"></span><span>Preferred Time</span></div>
+              <div class="step" data-step="reason"> <span class="step-dot"></span><span>Reason for Visit</span></div>
+            </div>
+          </div>
+
+          <!-- Confirmed Appointments -->
+          <div class="card appt-card">
+            <div class="card-header">
+              <i class="fa-solid fa-calendar-check"></i>
+              <h3>Appointments</h3>
+              <span class="badge" id="apptCount">0</span>
+            </div>
+            <div class="appt-list" id="apptList">
+              <div class="empty-state">
+                <i class="fa-regular fa-calendar-xmark"></i>
+                <p>No appointments yet</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Quick Chips -->
+          <div class="card faq-card">
+            <div class="card-header">
+              <i class="fa-solid fa-circle-question"></i>
+              <h3>Quick Prompts</h3>
+            </div>
+            <div class="faq-chips">
+              <button class="faq-chip" data-q="What services do you offer?">Services</button>
+              <button class="faq-chip" data-q="I want to book an appointment">Book Appointment</button>
+              <button class="faq-chip" data-q="What are your opening hours?">Hours</button>
+              <button class="faq-chip" data-q="I have a dental emergency">Emergency</button>
+              <button class="faq-chip" data-q="What is today's date?">Today's Date</button>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+    </div><!-- /viewDashboard -->
+
+    <!-- ────── APPOINTMENTS VIEW ────── -->
+    <div id="viewAppointments" class="tab-view">
+      <div class="card full-page-card">
+        <div class="card-header large">
+          <i class="fa-solid fa-calendar-check"></i>
+          <h2>All Appointments</h2>
+          <span class="badge" id="apptCountFull">0</span>
+        </div>
+        <div class="appt-grid-full" id="apptListFull">
+          <div class="empty-state">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <p>No appointments yet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── ANALYTICS VIEW ────── -->
+    <div id="viewAnalytics" class="tab-view">
+      <div class="card full-page-card">
+        <div class="card-header large">
+          <i class="fa-solid fa-chart-line"></i>
+          <h2>Practice Analytics</h2>
+        </div>
+        <div class="analytics-placeholder">
+          <div class="analytics-row">
+            <div class="mini-stat">
+              <h3>94%</h3>
+              <p>Patient Satisfaction</p>
+            </div>
+            <div class="mini-stat">
+              <h3>12</h3>
+              <p>Avg Minutes Per Call</p>
+            </div>
+            <div class="mini-stat">
+              <h3>88%</h3>
+              <p>Conversion Rate</p>
+            </div>
+          </div>
+          <div class="analytics-chart-mock">
+            <div class="bar" style="height: 40%;"></div>
+            <div class="bar" style="height: 65%;"></div>
+            <div class="bar" style="height: 85%;"></div>
+            <div class="bar" style="height: 70%;"></div>
+            <div class="bar" style="height: 95%;"></div>
+            <div class="bar" style="height: 60%;"></div>
+            <div class="bar" style="height: 80%;"></div>
+          </div>
+          <p class="chart-label">Weekly Appointment Volume</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+  "appointments": [
+    {
+      "patient_id": "PAT1001",
+      "name": "Michael Scott",
+      "phone": "9422488599",
+      "email": "michael@example.com",
+      "date": "1 April 2026",
+      "time": "10:30 AM",
+      "reason": "Routine check-up"
+    }
+  ]
+}
